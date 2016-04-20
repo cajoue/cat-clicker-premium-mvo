@@ -1,64 +1,67 @@
 'use strict';
 
-// need some clarity! try creating a Cat class.
+//************************
+// Model
+//************************
+
+var model = {
+  cats: [
+    {
+      name: 'Mystery',
+      image: 'http://placekitten.com/300/200',
+      sourceURL: 'http://placekitten.com',
+      source: 'placekitten.com',
+    },
+    {
+      name: 'Elsa',
+      image: 'img/elsa.jpg',
+      sourceURL: '#',
+      source: "Mum's Cat",
+    },
+    {
+      name: 'Molly',
+      image: 'img/molly.jpg',
+      sourceURL: '#',
+      source: "Lin's Cat",
+    },
+    {
+      name: 'Nero',
+      image: 'img/nero.jpg',
+      sourceURL: '#',
+      source: "Mum's Cat",
+    },
+    {
+      name: 'Reggie',
+      image: 'img/reggie.jpg',
+      sourceURL: '#',
+      source: "Mum's Cat",
+    },
+    {
+      name: 'Flicker',
+      image: 'http://loremflickr.com/300/200/kitten?random=2',
+      sourceURL: 'http://loremflickr.com',
+      source: 'loremflickr.com',
+    },
+    {
+      name: 'Free',
+      image: 'img/cat01.jpg',
+      sourceURL: 'http://all-free-download.com/',
+      source: 'all-free-download.com',
+    },
+    {
+      name: "Andy's Cat",
+      image: 'img/andy.jpg',
+      sourceURL: 'https://github.com/udacity/ud989-cat-clicker-andy',
+      source: 'Udacity Andy',
+    }
+  ],
+  selectedCat: 0
+};
 
 // the chosen cat
 var catSelected;
 
-// cat JSON
 
-var cats = {
-  cat: [
-  {
-    name: 'Mystery',
-    image: 'http://placekitten.com/300/200',
-    sourceURL: 'http://placekitten.com',
-    source: 'placekitten.com',
-  },
-  {
-    name: 'Elsa',
-    image: 'img/elsa.jpg',
-    sourceURL: '#',
-    source: "Mum's Cat",
-  },
-  {
-    name: 'Molly',
-    image: 'img/molly.jpg',
-    sourceURL: '#',
-    source: "Lin's Cat",
-  },
-  {
-    name: 'Nero',
-    image: 'img/nero.jpg',
-    sourceURL: '#',
-    source: "Mum's Cat",
-  },
-  {
-    name: 'Reggie',
-    image: 'img/reggie.jpg',
-    sourceURL: '#',
-    source: "Mum's Cat",
-  },
-  {
-    name: 'Flicker',
-    image: 'http://loremflickr.com/300/200/kitten?random=2',
-    sourceURL: 'http://loremflickr.com',
-    source: 'loremflickr.com',
-  },
-  {
-    name: 'Free',
-    image: 'img/cat01.jpg',
-    sourceURL: 'http://all-free-download.com/',
-    source: 'all-free-download.com',
-  },
-  {
-    name: "Andy's Cat",
-    image: 'img/andy.jpg',
-    sourceURL: 'https://github.com/udacity/ud989-cat-clicker-andy',
-    source: 'Udacity Andy',
-  }
-  ]
-};
 
 //************************
 // Cat class
@@ -71,10 +74,10 @@ class Cat {
   constructor(num) {
     this.catID = num;
     this.count = 0;
-    this.name = cats.cat[num].name;
-    this.image = cats.cat[num].image;
-    this.sourceURL = cats.cat[num].sourceURL;
-    this.source = cats.cat[num].source;
+    this.name = model.cats[num].name;
+    this.image = model.cats[num].image;
+    this.sourceURL = model.cats[num].sourceURL;
+    this.source = model.cats[num].source;
   }
 
   clicked() {
@@ -145,9 +148,10 @@ function catDisplay(){
 
 function catShow(catChoice){
   catSelected = catChoice;
+  model.selectedCat = catChoice.catID;
 
   $('div .cat-unit').each(function(){
-    if($(this).attr('id') == catSelected.catID){
+    if($(this).attr('id') == model.selectedCat){
       $(this).show();
     }else{
       $(this).hide();
@@ -164,6 +168,7 @@ function catClicker(numCats){
   createCatNav();
   catDisplay();
   var catRandom = Math.floor(Math.random() * numCats);
+  model.selectedCat = catRandom;
   catShow(catArray[catRandom]);
 }
 
@@ -182,4 +187,4 @@ $(document).ready(function() {
   });
 });
 
-catClicker(cats.cat.length);
+catClicker(model.cats.length);
