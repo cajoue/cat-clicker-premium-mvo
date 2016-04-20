@@ -108,6 +108,11 @@ var octopus = {
   // increment clickCount for selected cat
   incrementClicksForCat: function(catRef){
     model.cats[catRef].clickCount++;
+  },
+  // set a random id for the first cat to display
+  setRandomCat: function(){
+    var numCats = this.getNumCats();
+    model.selectedCat = Math.floor(Math.random() * numCats);
   }
 
 };
