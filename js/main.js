@@ -11,48 +11,56 @@ var model = {
       image: 'http://placekitten.com/300/200',
       sourceURL: 'http://placekitten.com',
       source: 'placekitten.com',
+      clickCount: 0
     },
     {
       name: 'Elsa',
       image: 'img/elsa.jpg',
       sourceURL: '#',
       source: "Mum's Cat",
+      clickCount: 0
     },
     {
       name: 'Molly',
       image: 'img/molly.jpg',
       sourceURL: '#',
       source: "Lin's Cat",
+      clickCount: 0
     },
     {
       name: 'Nero',
       image: 'img/nero.jpg',
       sourceURL: '#',
       source: "Mum's Cat",
+      clickCount: 0
     },
     {
       name: 'Reggie',
       image: 'img/reggie.jpg',
       sourceURL: '#',
       source: "Mum's Cat",
+      clickCount: 0
     },
     {
       name: 'Flicker',
       image: 'http://loremflickr.com/300/200/kitten?random=2',
       sourceURL: 'http://loremflickr.com',
       source: 'loremflickr.com',
+      clickCount: 0
     },
     {
       name: 'Free',
       image: 'img/cat01.jpg',
       sourceURL: 'http://all-free-download.com/',
       source: 'all-free-download.com',
+      clickCount: 0
     },
     {
       name: "Andy's Cat",
       image: 'img/andy.jpg',
       sourceURL: 'https://github.com/udacity/ud989-cat-clicker-andy',
       source: 'Udacity Andy',
+      clickCount: 0
     }
   ],
   selectedCat: 0
@@ -85,8 +93,13 @@ var viewCat = {
 
 var octopus = {
   init: function(){},
+  // get number of cats from model
   getNumCats: function(){
     return model.cats.length;
+  },
+  // get selected cat object from model
+  getSelectedCat: function(catRef){
+    return model.cats[catRef];
   }
 };
 
