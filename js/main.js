@@ -100,7 +100,16 @@ var octopus = {
   // get selected cat object from model
   getSelectedCat: function(catRef){
     return model.cats[catRef];
+  },
+  // increment clickCount for selected cat
+  getClicksForCat: function(catRef){
+    return model.cats[catRef].clickCount;
+  },
+  // increment clickCount for selected cat
+  incrementClicksForCat: function(catRef){
+    model.cats[catRef].clickCount++;
   }
+
 };
 
 
