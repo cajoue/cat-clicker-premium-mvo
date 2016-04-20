@@ -58,6 +58,39 @@ var model = {
   selectedCat: 0
 };
 
+//************************
+// Views
+// viewList for the nav menu
+// viewCat to display selected cat
+//************************
+
+var viewList = {
+  init: function(){
+    this.navList = $('#cat-list');
+    // create octopus.getNumCats() to query model and return length of cat array
+    this.numCats = octopus.getNumCats();
+
+  },
+  render: function(){}
+};
+
+var viewCat = {
+  init: function(){},
+  render: function(){}
+};
+
+//************************
+// Octopus
+//************************
+
+var octopus = {
+  init: function(){},
+  getNumCats: function(){
+    return model.cats.length;
+  }
+};
+
+
 // the chosen cat
 var catSelected;
 
