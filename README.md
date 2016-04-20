@@ -33,7 +33,7 @@ _Interaction_
 **Thoughts/Mods**
 * maybe go back to just using json for the cats and not use classes
 * don't show/hide the cats, try DOM manipulation instead
-* 
+* use html file for more content structure instead of building it all in js 
 
 **Helpful Resources**
 

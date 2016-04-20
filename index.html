@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Cat Clicker Premium">
+  <meta name="description" content="Cat Clicker Premium MVO">
   <meta name="author" content="Valerie Yallup">
   <title>Cat Clicker Premium</title>
   <link rel="stylesheet" href="css/normalize.css">
@@ -15,18 +15,20 @@
     <header>
       <div class="flex-header">
         <div class="header-title">
-          <h1>Cat Clicker</h1>
+          <h1>Cat Clicker Premium MVO</h1>
         </div>
       </div>
     </header>
     <main>
       <div class="flex-main">
         <!-- Cats -->
-        <nav id="cat-list" class="nav">
+        <nav id="nav" class="nav">
           <h4>Select a cat</h4>
+          <ul id="cat-list" class="cat-list"></ul>
         </nav>
-        <div id ="cat-arena" class="display-area">
+        <div id ="cat-arena" class="cat-arena">
           <h2>Click your cat!</h2>
+          <figure id="selected-cat"></figure>
         </div>
       </div>
     </main>

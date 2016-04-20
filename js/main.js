@@ -99,7 +99,7 @@ function createCats(numCats){
 var catNav = $('#cat-list');
 
 function createCatNav(){
-  catNav.append('<ul></ul>');
+  //catNav.append('<ul></ul>');
   for (var i = 0; i < catArray.length; i++) {
     catNav.append('<li><a href="#" class="cat-list-item" id="' + catArray[i].catID + '">' + catArray[i].name + '</a></li>');
   }
