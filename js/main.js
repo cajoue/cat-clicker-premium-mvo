@@ -1,81 +1,76 @@
-
-// temporarily define mvc in global scope to check functionality using console
-var model = {};
-var octopus = {};
-var viewList = {};
-var viewCat = {};
-
 ( function ( $ ) {
   //'use strict';
+  // temporarily define mvc in global scope to check functionality using console
+
   // use $(document).ready() for jQuery code in external js file
   // $(function(){}) is shorthand for $(document).ready(function(){}
 
-  $( function () {
-    console.log( 'working!' );
+    $( function () {
+      console.log( 'working!' );
 
 //************************
 // Model
 // cat data is here
 //************************
 
-  model = {
+model = {
   cats: [
-    {
-      name: 'Mystery',
-      image: 'http://placekitten.com/300/200',
-      sourceURL: 'http://placekitten.com',
-      source: 'placekitten.com',
-      clickCount: 0
-    },
-    {
-      name: 'Elsa',
-      image: 'img/elsa.jpg',
-      sourceURL: '#',
-      source: "Mum's Cat",
-      clickCount: 0
-    },
-    {
-      name: 'Molly',
-      image: 'img/molly.jpg',
-      sourceURL: '#',
-      source: "Lin's Cat",
-      clickCount: 0
-    },
-    {
-      name: 'Nero',
-      image: 'img/nero.jpg',
-      sourceURL: '#',
-      source: "Mum's Cat",
-      clickCount: 0
-    },
-    {
-      name: 'Reggie',
-      image: 'img/reggie.jpg',
-      sourceURL: '#',
-      source: "Mum's Cat",
-      clickCount: 0
-    },
-    {
-      name: 'Flicker',
-      image: 'http://loremflickr.com/300/200/kitten?random=2',
-      sourceURL: 'http://loremflickr.com',
-      source: 'loremflickr.com',
-      clickCount: 0
-    },
-    {
-      name: 'Free',
-      image: 'img/cat01.jpg',
-      sourceURL: 'http://all-free-download.com/',
-      source: 'all-free-download.com',
-      clickCount: 0
-    },
-    {
-      name: "Andy's Cat",
-      image: 'img/andy.jpg',
-      sourceURL: 'https://github.com/udacity/ud989-cat-clicker-andy',
-      source: 'Udacity Andy',
-      clickCount: 0
-    }
+  {
+    name: 'Mystery',
+    image: 'http://placekitten.com/300/200',
+    sourceURL: 'http://placekitten.com',
+    source: 'placekitten.com',
+    clickCount: 0
+  },
+  {
+    name: 'Elsa',
+    image: 'img/elsa.jpg',
+    sourceURL: '#',
+    source: "Mum's Cat",
+    clickCount: 0
+  },
+  {
+    name: 'Molly',
+    image: 'img/molly.jpg',
+    sourceURL: '#',
+    source: "Lin's Cat",
+    clickCount: 0
+  },
+  {
+    name: 'Nero',
+    image: 'img/nero.jpg',
+    sourceURL: '#',
+    source: "Mum's Cat",
+    clickCount: 0
+  },
+  {
+    name: 'Reggie',
+    image: 'img/reggie.jpg',
+    sourceURL: '#',
+    source: "Mum's Cat",
+    clickCount: 0
+  },
+  {
+    name: 'Flicker',
+    image: 'http://loremflickr.com/300/200/kitten?random=2',
+    sourceURL: 'http://loremflickr.com',
+    source: 'loremflickr.com',
+    clickCount: 0
+  },
+  {
+    name: 'Free',
+    image: 'img/cat01.jpg',
+    sourceURL: 'http://all-free-download.com/',
+    source: 'all-free-download.com',
+    clickCount: 0
+  },
+  {
+    name: "Andy's Cat",
+    image: 'img/andy.jpg',
+    sourceURL: 'https://github.com/udacity/ud989-cat-clicker-andy',
+    source: 'Udacity Andy',
+    clickCount: 0
+  }
   ],
   selectedCat: 0
 };
@@ -86,17 +81,33 @@ var viewCat = {};
 // viewCat to display selected cat
 //************************
 
- viewList = {
+viewList = {
   init: function(){
-    this.navList = $('#cat-list');
+    console.log('hello viewList');
     // create octopus.getNumCats() to query model and return length of cat array
     this.numCats = octopus.getNumCats();
+    console.log('this.numCats: ' + this.numCats);
 
+    // grab elements and html for using in the render function
+    this.$navList = $('#cat-list');
+
+    this.render();
   },
-  render: function(){}
+  render: function(){
+    // Cache vars for use in forEach() callback (performance)
+    var $navList = this.$navList;
+    console.log('$navList: ' + $navList);
+    console.log('octopus.getCats(): ' + octopus.getCats());
+    octopus.getCats().forEach(function(cat) {
+
+      $navList.append('<li><a href="#" class="cat-list-item" id="' + cat.catID + '">' + cat.name + '</a></li>');
+
+      console.log('cat.name: ' + cat.name + 'cat.catID: ' + cat.catID);
+    });
+  }
 };
 
- viewCat = {
+viewCat = {
   init: function(){},
   render: function(){}
 };
@@ -105,8 +116,11 @@ var viewCat = {};
 // Octopus
 //************************
 
- octopus = {
-  init: function(){},
+octopus = {
+  init: function(){
+    this.setCatID();
+    viewList.init();
+  },
   // get number of cats from model
   getNumCats: function(){
     return model.cats.length;
@@ -114,6 +128,19 @@ var viewCat = {};
   // get selected cat object from model
   getSelectedCat: function(catRef){
     return model.cats[catRef];
+  },
+  // get all cat object from model
+  getCats: function(){
+    return model.cats;
+  },
+  // get selected cat name from model
+  // http://stackoverflow.com/a/19590901/6156379
+  getCatList: function(){
+    return model.cats.map(function(catList) {return catList.name;});
+  },
+  // get selected cat name from model
+  getCatName: function(catRef){
+    return model.cats[catRef].name;
   },
   // increment clickCount for selected cat
   getClicksForCat: function(catRef){
@@ -127,13 +154,22 @@ var viewCat = {};
   setRandomCat: function(){
     var numCats = this.getNumCats();
     model.selectedCat = Math.floor(Math.random() * numCats);
+  },
+  // set a cat ids
+  setCatID: function(){
+    var i = 0;
+    this.getCats().forEach(function(cat) {
+      cat.catID = i++;
+      console.log('cat.catID: ' + cat.catID);
+  });
+
+
   }
 };
 
 
 // the chosen cat
 var catSelected;
-
 
 
 //************************
@@ -262,7 +298,8 @@ $(document).ready(function() {
 
 catClicker(model.cats.length);
 
+octopus.init();
 
 console.log( 'still working!' );
-  })
+})
 } ( jQuery ) );  // end of iife

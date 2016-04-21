@@ -26,9 +26,9 @@ _Interaction_
 * [ ] The number of clicks in the cat area should be unique to each cat, and should increment when the cat's picture is clicked.
 
 **To Do:**
-* Review existing Cat Clicker Premium
-* Plan separation of concerns
-* 
+* <del>Review existing Cat Clicker Premium</del>Review existing Cat Clicker Premium
+* <del>Plan separation of concerns</del>
+* don't forget to fix global vars
 
 **Thoughts/Mods**
 * maybe go back to just using json for the cats and not use classes
@@ -52,4 +52,6 @@ Gaah! this was soooo frustrating!!
 http://stackoverflow.com/questions/13766371/console-access-to-javascript-variables-local-to-the-document-ready-function
 
 http://stackoverflow.com/questions/11152977/global-javascript-variable-inside-document-ready
+
+http://stackoverflow.com/questions/19590865/from-an-array-of-objects-extract-value-of-a-property-as-array
 
