@@ -94,15 +94,26 @@ viewList = {
     this.render();
   },
   render: function(){
-    // Cache vars for use in forEach() callback (performance)
-    var $navList = this.$navList;
+    // Cache vars for use in forEach() callback
+    var $navList = this.$navList,
+        catListID = '#';
+
     console.log('$navList: ' + $navList);
     console.log('octopus.getCats(): ' + octopus.getCats());
+
+
+    // for each cat create a nav <li> item with unique id
+    // and click handler to display chosen cat
     octopus.getCats().forEach(function(cat) {
-
-      $navList.append('<li><a href="#" class="cat-list-item" id="' + cat.catID + '">' + cat.name + '</a></li>');
-
+      // nav item
+      $navList.append('<li><a href="#" class="cat-list-item" id="show' + cat.catID + '">' + cat.name + '</a></li>');
       console.log('cat.name: ' + cat.name + 'cat.catID: ' + cat.catID);
+      // save unique id
+      var catListID = '#show' + cat.catID;
+      // attach click event to unique id
+      $(catListID).click(function(e){
+        console.log('Display this cat: ' + catListID + ': ' + cat.name)
+      })
     });
   }
 };
@@ -118,6 +129,7 @@ viewCat = {
 
 octopus = {
   init: function(){
+    console.log('hello octopus');
     this.setCatID();
     viewList.init();
   },
@@ -159,8 +171,7 @@ octopus = {
   setCatID: function(){
     var i = 0;
     this.getCats().forEach(function(cat) {
-      cat.catID = i++;
-      console.log('cat.catID: ' + cat.catID);
+      cat.catID = 'cat' + i++;
   });
 
 
