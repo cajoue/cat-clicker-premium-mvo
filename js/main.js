@@ -1,10 +1,24 @@
-'use strict';
+
+// temporarily define mvc in global scope to check functionality using console
+var model = {};
+var octopus = {};
+var viewList = {};
+var viewCat = {};
+
+( function ( $ ) {
+  //'use strict';
+  // use $(document).ready() for jQuery code in external js file
+  // $(function(){}) is shorthand for $(document).ready(function(){}
+
+  $( function () {
+    console.log( 'working!' );
 
 //************************
 // Model
+// cat data is here
 //************************
 
-var model = {
+  model = {
   cats: [
     {
       name: 'Mystery',
@@ -72,7 +86,7 @@ var model = {
 // viewCat to display selected cat
 //************************
 
-var viewList = {
+ viewList = {
   init: function(){
     this.navList = $('#cat-list');
     // create octopus.getNumCats() to query model and return length of cat array
@@ -82,7 +96,7 @@ var viewList = {
   render: function(){}
 };
 
-var viewCat = {
+ viewCat = {
   init: function(){},
   render: function(){}
 };
@@ -91,7 +105,7 @@ var viewCat = {
 // Octopus
 //************************
 
-var octopus = {
+ octopus = {
   init: function(){},
   // get number of cats from model
   getNumCats: function(){
@@ -114,7 +128,6 @@ var octopus = {
     var numCats = this.getNumCats();
     model.selectedCat = Math.floor(Math.random() * numCats);
   }
-
 };
 
 
@@ -248,3 +261,8 @@ $(document).ready(function() {
 });
 
 catClicker(model.cats.length);
+
+
+console.log( 'still working!' );
+  })
+} ( jQuery ) );  // end of iife

@@ -41,4 +41,15 @@ http://api.jquery.com
 
 https://www.udacity.com/course/viewer#!/c-ud989/l-3417188540/m-3480348671
 
+How to Properly Include jQuery: 
+
+http://code.tutsplus.com/articles/a-beginners-guide-to-enqueuing-jquery--wp-30615
+
+http://stackoverflow.com/questions/10263280/whats-the-proper-way-to-use-jquery-in-conjunction-with-use-strict
+
+Gaah! this was soooo frustrating!!
+
+http://stackoverflow.com/questions/13766371/console-access-to-javascript-variables-local-to-the-document-ready-function
+
+http://stackoverflow.com/questions/11152977/global-javascript-variable-inside-document-ready
 
