@@ -107,6 +107,7 @@ viewList = {
       // attach click event to unique id
       $(catListID).click(function(e){
         console.log('Display this cat: ' + catListID + ': ' + cat.name);
+        viewCat.render(cat.catID);
       })
     });
   }
@@ -115,7 +116,7 @@ viewList = {
 viewCat = {
   init: function(){
     // grab elements and html for using in the render function
-    this.$catShow = $('#selected-cat');
+    this.catShow = $('#selected-cat');
     // create random first cat
     octopus.setRandomCat();
     var randomCat = octopus.getSelectedCatID();
@@ -125,6 +126,13 @@ viewCat = {
   render: function(catRef){
     console.log('selectedCat: ' + catRef);
     console.log('hello viewCat: ' + octopus.getSelectedCat(catRef).name);
+    var cat = octopus.getSelectedCat(catRef);
+    var htmlStr = '';
+    htmlStr += '<figcaption><h3>' + cat.name + '</h3></figcaption>' +
+            '<figcaption class="kitInfo">I has been clicked <span id="spanClick">' + cat.clickCount + '</span> times</figcaption>' +
+            '<picture><img src="' + cat.image + '" alt="picture of kitten"></picture>' +
+            '<figcaption>Kitten thanks to <a href="' + cat.sourceURL + '">' + cat.source + '</a></figcaption>';
+    this.catShow.html( htmlStr );
   }
 };
 
@@ -143,7 +151,7 @@ octopus = {
   setCatID: function(){
     var i = 0;
     this.getCats().forEach(function(cat) {
-      cat.catID = 'cat' + i++;
+      cat.catID = i++;
     });
   },
 

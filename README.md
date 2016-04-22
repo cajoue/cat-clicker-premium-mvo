@@ -11,18 +11,18 @@ Based on [Cat Clicker Premium](https://github.com/cajoue/cat-clicker-premium)
 _Visuals_
 
 * The application should display
-    - [ ] a list of at least 5 cats, listed by name
-    - [ ] an area to display the selected cat
+    - [x] a list of at least 5 cats, listed by name
+    - [x] an area to display the selected cat
 * In the cat display area, the following should be displayed
-    - [ ] the cat's name
-    - [ ] a picture of the cat
-    - [ ] text showing the number of clicks
+    - [x] the cat's name
+    - [x] a picture of the cat
+    - [x] text showing the number of clicks
 
 The specifics of the layout do not matter, so style it however you'd like.
 
 _Interaction_
 
-* [ ] When a cat name is clicked in the list, the cat display area should update to show the data for the selected cat.
+* [x] When a cat name is clicked in the list, the cat display area should update to show the data for the selected cat.
 * [ ] The number of clicks in the cat area should be unique to each cat, and should increment when the cat's picture is clicked.
 
 **To Do:**
@@ -31,9 +31,9 @@ _Interaction_
 * don't forget to fix global vars
 
 **Thoughts/Mods**
-* maybe go back to just using json for the cats and not use classes
-* don't show/hide the cats, try DOM manipulation instead
-* use html file for more content structure instead of building it all in js 
+* <del>maybe go back to just using json for the cats and not use classes</del>
+* <del>don't show/hide the cats, try DOM manipulation instead</del>
+* <del>use html file for more content structure instead of building it all in js</del>
 
 **Helpful Resources**
 
