@@ -50,13 +50,13 @@ model = {
     source: "Mum's Cat",
     clickCount: 0
   },
-  {
-    name: 'Flicker',
-    image: 'http://loremflickr.com/300/200/kitten?random=2',
-    sourceURL: 'http://loremflickr.com',
-    source: 'loremflickr.com',
-    clickCount: 0
-  },
+  //{ // this is sooooo slow and the image changes each time too
+  //   name: 'Slow Chameleon',
+  //   image: 'http://loremflickr.com/300/200/kitten?random=2',
+  //   sourceURL: 'http://loremflickr.com',
+  //   source: 'loremflickr.com',
+  //   clickCount: 0
+  // },
   {
     name: 'Free',
     image: 'img/cat01.jpg',
@@ -65,7 +65,7 @@ model = {
     clickCount: 0
   },
   {
-    name: "Andy's Cat",
+    name: "Andy",
     image: 'img/andy.jpg',
     sourceURL: 'https://github.com/udacity/ud989-cat-clicker-andy',
     source: 'Udacity Andy',
@@ -102,7 +102,7 @@ viewList = {
       // nav item
       $navList.append('<li><a href="#" class="cat-list-item" id="show' + cat.catID + '">' + cat.name + '</a></li>');
       console.log('cat.name: ' + cat.name + 'cat.catID: ' + cat.catID);
-      // save unique id
+      // save unique menu id
       var catListID = '#show' + cat.catID;
       // attach click event to unique id
       $(catListID).click(function(e){
@@ -122,17 +122,28 @@ viewCat = {
     var randomCat = octopus.getSelectedCatID();
     this.render(randomCat);
   },
-  // render specified cat
+  // render specified cat receives catID as argument
   render: function(catRef){
     console.log('selectedCat: ' + catRef);
     console.log('hello viewCat: ' + octopus.getSelectedCat(catRef).name);
     var cat = octopus.getSelectedCat(catRef);
+    // create html string for specified cat
     var htmlStr = '';
     htmlStr += '<figcaption><h3>' + cat.name + '</h3></figcaption>' +
-            '<figcaption class="kitInfo">I has been clicked <span id="spanClick">' + cat.clickCount + '</span> times</figcaption>' +
-            '<picture><img src="' + cat.image + '" alt="picture of kitten"></picture>' +
+            '<figcaption class="catCount">I has been clicked ' + cat.clickCount + ' times</figcaption>' +
+            '<picture id="pic' + cat.catID + '"><img src="' + cat.image + '" alt="picture of kitten"></picture>' +
             '<figcaption>Kitten thanks to <a href="' + cat.sourceURL + '">' + cat.source + '</a></figcaption>';
     this.catShow.html( htmlStr );
+
+    // add event handler for selected cat image
+    this.catPic = $('#pic' + cat.catID + '');
+    // attach click event to cat pic id
+    $(this.catPic).click(function(e){
+      console.log('Count this cat: ' + cat.name);
+      // increment count
+      octopus.incrementClicksForCat(cat.catID);
+      e.preventDefault();
+    })
   }
 };
 
@@ -201,6 +212,7 @@ octopus = {
   // increment clickCount for selected cat
   incrementClicksForCat: function(catRef){
     model.cats[catRef].clickCount++;
+    viewCat.render(catRef);
   }
 };
 
