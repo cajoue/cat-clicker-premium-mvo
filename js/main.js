@@ -83,24 +83,18 @@ model = {
 
 viewList = {
   init: function(){
-    console.log('hello viewList');
-    // create octopus.getNumCats() to query model and return length of cat array
-    this.numCats = octopus.getNumCats();
-    console.log('this.numCats: ' + this.numCats);
-
     // grab elements and html for using in the render function
     this.$navList = $('#cat-list');
-
     this.render();
   },
   render: function(){
+        console.log('hello viewList');
     // Cache vars for use in forEach() callback
     var $navList = this.$navList,
         catListID = '#';
 
     console.log('$navList: ' + $navList);
     console.log('octopus.getCats(): ' + octopus.getCats());
-
 
     // for each cat create a nav <li> item with unique id
     // and click handler to display chosen cat
@@ -112,15 +106,26 @@ viewList = {
       var catListID = '#show' + cat.catID;
       // attach click event to unique id
       $(catListID).click(function(e){
-        console.log('Display this cat: ' + catListID + ': ' + cat.name)
+        console.log('Display this cat: ' + catListID + ': ' + cat.name);
       })
     });
   }
 };
 
 viewCat = {
-  init: function(){},
-  render: function(){}
+  init: function(){
+    // grab elements and html for using in the render function
+    this.$catShow = $('#selected-cat');
+    // create random first cat
+    octopus.setRandomCat();
+    var randomCat = octopus.getSelectedCatID();
+    this.render(randomCat);
+  },
+  // render specified cat
+  render: function(catRef){
+    console.log('selectedCat: ' + catRef);
+    console.log('hello viewCat: ' + octopus.getSelectedCat(catRef).name);
+  }
 };
 
 //************************
@@ -132,182 +137,70 @@ octopus = {
     console.log('hello octopus');
     this.setCatID();
     viewList.init();
+    viewCat.init();
+  },
+    // set all cat ids
+  setCatID: function(){
+    var i = 0;
+    this.getCats().forEach(function(cat) {
+      cat.catID = 'cat' + i++;
+    });
+  },
+
+  //////////////////////////
+  // model.selectedCat
+  //////////////////////////
+
+  // set a random id for the first cat to display
+  setRandomCat: function(){
+    var numCats = this.getNumCats();
+    model.selectedCat = Math.floor(Math.random() * numCats);
+  },
+    // get selected cat ID from model
+  getSelectedCatID: function(){
+    return model.selectedCat;
+  },
+
+  //////////////////////////
+  // model.cats[]
+  //////////////////////////
+
+  // get all cat objects from model
+  getCats: function(){
+    return model.cats;
   },
   // get number of cats from model
   getNumCats: function(){
     return model.cats.length;
   },
-  // get selected cat object from model
-  getSelectedCat: function(catRef){
-    return model.cats[catRef];
-  },
-  // get all cat object from model
-  getCats: function(){
-    return model.cats;
-  },
-  // get selected cat name from model
+  // get list of cat names from model
   // http://stackoverflow.com/a/19590901/6156379
   getCatList: function(){
     return model.cats.map(function(catList) {return catList.name;});
+  },
+  // get selected cat object from model
+  getSelectedCat: function(catRef){
+    return model.cats[catRef];
   },
   // get selected cat name from model
   getCatName: function(catRef){
     return model.cats[catRef].name;
   },
-  // increment clickCount for selected cat
+  // get clickCount for selected cat
   getClicksForCat: function(catRef){
     return model.cats[catRef].clickCount;
   },
   // increment clickCount for selected cat
   incrementClicksForCat: function(catRef){
     model.cats[catRef].clickCount++;
-  },
-  // set a random id for the first cat to display
-  setRandomCat: function(){
-    var numCats = this.getNumCats();
-    model.selectedCat = Math.floor(Math.random() * numCats);
-  },
-  // set a cat ids
-  setCatID: function(){
-    var i = 0;
-    this.getCats().forEach(function(cat) {
-      cat.catID = 'cat' + i++;
-  });
-
-
   }
 };
 
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
-// the chosen cat
-var catSelected;
-
-
-//************************
-// Cat class
-// old style create class: var Cat = function () {};
-// new ECMAScript 6 style: var Cat = class {};
-// numCats will be number of items in cat array in json
-//************************
-
-class Cat {
-  constructor(num) {
-    this.catID = num;
-    this.count = 0;
-    this.name = model.cats[num].name;
-    this.image = model.cats[num].image;
-    this.sourceURL = model.cats[num].sourceURL;
-    this.source = model.cats[num].source;
-  }
-
-  clicked() {
-    var pic = '#span' + this.catID + '';
-    $(pic).text(++this.count);
-  }
-}
-
-var catArray = [];
-
-function createCats(numCats){
-  for (var i = 0; i < numCats; i++) {
-    catArray.push(new Cat(i));
-  }
-
-}
-
-//************************
-// Cat Navigation
-//************************
-
-var catNav = $('#cat-list');
-
-function createCatNav(){
-  //catNav.append('<ul></ul>');
-  for (var i = 0; i < catArray.length; i++) {
-    catNav.append('<li><a href="#" class="cat-list-item" id="' + catArray[i].catID + '">' + catArray[i].name + '</a></li>');
-  }
-
-  var catLinks = $('.cat-list-item').toArray();
-  for (var i = 0; i < catLinks.length; i++) {
-    catLinks[i].onclick = function() {
-      //console.log(catArray[this.id]);
-      catShow(catArray[this.id]);
-    };
-  }
-}
-
-//************************
-// Cat Display
-// Cat display format
-//************************
-
-function catDisplay(){
-  var catUnit;
-  var catName;
-  var catImage;
-  var catSource;
-
-  for (var i = 0, kittyCount = catArray.length; i < kittyCount; i++){
-    catUnit = '<div class="cat-unit" id="' + catArray[i].catID + '"><figure id="' + catArray[i].catID + '"></figure></div>';
-    catName = '<figcaption><h3>' + catArray[i].name + '</h3></figcaption>';
-    catImage = '<picture><img src="' + catArray[i].image + '" alt="picture of kitten"></picture>';
-    catSource = '<figcaption>Kitten thanks to <a href="' + catArray[i].sourceURL + '">' + catArray[i].source + '</a></figcaption>';
-
-    $('#cat-arena').append(catUnit);
-    $('figure:last').append(catName);
-    $('figure:last').append('<figcaption class="kitInfo">I has been clicked <span id="span' + catArray[i].catID + '">' + catArray[i].count + '</span> times</figcaption>');
-    $('figure:last').append(catImage);
-    $('figure:last').append(catSource);
-  }
-}
-
-//************************
-// Cat Show
-// Show only the selected cat
-//************************
-
-function catShow(catChoice){
-  catSelected = catChoice;
-  model.selectedCat = catChoice.catID;
-
-  $('div .cat-unit').each(function(){
-    if($(this).attr('id') == model.selectedCat){
-      $(this).show();
-    }else{
-      $(this).hide();
-    }
-  });
-}
-
-//************************
-// Cat Clicker
-//************************
-
-function catClicker(numCats){
-  createCats(numCats);
-  createCatNav();
-  catDisplay();
-  var catRandom = Math.floor(Math.random() * numCats);
-  model.selectedCat = catRandom;
-  catShow(catArray[catRandom]);
-}
-
-// use $(document).ready() for jQuery code in external js file
-// $(function(){}) is shorthand for $(document).ready(function(){})
-
-$(document).ready(function() {
-  $('picture').click(function (event) {
-    // first succesful solution
-    // var target = $(this).parent().children('.kitInfo');
-    // // update number of clicks for the particular cat.
-    // target.text('I has been clicked ' + ++catSelected.count + ' times');
-
-    // // this acts as a closure on the currently selected cat - I think!
-    catSelected.clicked();
-  });
-});
-
-catClicker(model.cats.length);
 
 octopus.init();
 
