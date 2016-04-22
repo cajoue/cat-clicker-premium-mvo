@@ -28,7 +28,7 @@ _Interaction_
 **To Do:**
 * <del>Review existing Cat Clicker Premium</del>Review existing Cat Clicker Premium
 * <del>Plan separation of concerns</del>
-* don't forget to fix global vars
+* <del>don't forget to fix global vars</del>
 
 **Thoughts/Mods**
 * <del>maybe go back to just using json for the cats and not use classes</del>
