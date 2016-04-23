@@ -1,5 +1,5 @@
 ( function ( $ ) {
-  'use strict';
+  //'use strict';
   // use $(document).ready() for jQuery code in external js file
   // $(function(){}) is shorthand for $(document).ready(function(){}
   $( function () {
@@ -102,10 +102,15 @@
     }
   };
 
-  var viewCat = {
+   viewCat = {
     init: function(){
       // grab elements and html for using in the render function
       this.catShow = $('#selected-cat');
+      this.catName = $('#cat-name');
+      this.catCount = $('#cat-count');
+      this.catPic = $('#cat-pic');
+      this.catSource = $('#cat-source');
+
       // create random first cat
       octopus.setRandomCat();
       var randomCat = octopus.getSelectedCatID();
@@ -115,13 +120,25 @@
     render: function(catRef){
       // get the data for this cat
       var cat = octopus.getSelectedCat(catRef);
+      console.log('cat: ' + JSON.stringify(cat));
       // create html string for specified cat
-      var htmlStr = '';
-      htmlStr += '<figcaption><h3>' + cat.name + '</h3></figcaption>' +
-              '<figcaption class="catCount">I has been clicked ' + cat.clickCount + ' times</figcaption>' +
-              '<picture id="pic' + cat.catID + '"><img src="' + cat.image + '" alt="picture of kitten"></picture>' +
-              '<figcaption>Kitten thanks to <a href="' + cat.sourceURL + '">' + cat.source + '</a></figcaption>';
-      this.catShow.html( htmlStr );
+      // var htmlStr = '';
+      // htmlStr += '<figcaption><h3>' + cat.name + '</h3></figcaption>' +
+      //         '<figcaption class="catCount">I has been clicked ' + cat.clickCount + ' times</figcaption>' +
+      //         '<picture><img id="pic' + cat.catID + '" src="' + cat.image + '" alt="picture of kitten"></picture>' +
+      //         '<figcaption>Kitten thanks to <a href="' + cat.sourceURL + '">' + cat.source + '</a></figcaption>';
+      // this.catShow.html( htmlStr );
+      $(this.catName).text(cat.name);
+      $(this.catCount).text(cat.clickCount);
+      //$(this.catPic).html(); = cat.image;
+
+      console.log('cat.image: ' + cat.image);
+      $(this.catPic).attr( 'src', cat.image );
+      console.log('$(this.catPic): ' + JSON.stringify($(this.catPic).attr( 'src')));
+
+      $(this.catSource).attr( 'href', cat.sourceURL );
+      $(this.catSource).text(cat.source);
+
 
       // add event handler for selected cat image
       this.catPic = $('#pic' + cat.catID + '');

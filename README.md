@@ -35,6 +35,12 @@ _Interaction_
 * <del>don't show/hide the cats, try DOM manipulation instead</del>
 * <del>use html file for more content structure instead of building it all in js</del>
 
+**branch kd inspired by advice in forum**
+
+https://discussions.udacity.com/t/cat-clicker-premium-mvo-event-handler-for-clicks/165477
+
+
+
 **Helpful Resources**
 
 http://api.jquery.com
@@ -54,4 +60,7 @@ http://stackoverflow.com/questions/13766371/console-access-to-javascript-variabl
 http://stackoverflow.com/questions/11152977/global-javascript-variable-inside-document-ready
 
 http://stackoverflow.com/questions/19590865/from-an-array-of-objects-extract-value-of-a-property-as-array
+
+http://api.jquery.com/attr/
+
 
