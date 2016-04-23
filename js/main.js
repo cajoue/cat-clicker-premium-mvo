@@ -1,5 +1,5 @@
 ( function ( $ ) {
-  //'use strict';
+  'use strict';
   // use $(document).ready() for jQuery code in external js file
   // $(function(){}) is shorthand for $(document).ready(function(){}
   $( function () {
@@ -95,14 +95,16 @@
         // save unique menu id
         catListID = '#show' + cat.catID;
         // attach click event to unique id
+        // the id is remembered for each of the nav items
         $(catListID).click(function(e){
-          viewCat.render(cat.catID);
+          octopus.setSelectedCat(cat.catID);
+          viewCat.render();
         });
       });
     }
   };
 
-   viewCat = {
+  var viewCat = {
     init: function(){
       // grab elements and html for using in the render function
       this.catShow = $('#selected-cat');
@@ -111,43 +113,33 @@
       this.catPic = $('#cat-pic');
       this.catSource = $('#cat-source');
 
+      // moved event handler from render
+      // reworked to get the reference to currently selected cat within the click
+      // if an actual id is passed - it is permanent
+      $(this.catPic).click(function(e){
+        octopus.incrementClicksForCat();
+        e.preventDefault();
+      });
+
       // create random first cat
       octopus.setRandomCat();
-      var randomCat = octopus.getSelectedCatID();
-      this.render(randomCat);
+      this.render();
     },
-    // render specified cat receives catID as argument
-    render: function(catRef){
+    // render cat no longer receives catID as argument
+    // it retrieves selectedCat from octopus
+    render: function(){
       // get the data for this cat
+      // may rework to make less cumbersome
+      var catRef = octopus.getSelectedCatID();
       var cat = octopus.getSelectedCat(catRef);
-      console.log('cat: ' + JSON.stringify(cat));
-      // create html string for specified cat
-      // var htmlStr = '';
-      // htmlStr += '<figcaption><h3>' + cat.name + '</h3></figcaption>' +
-      //         '<figcaption class="catCount">I has been clicked ' + cat.clickCount + ' times</figcaption>' +
-      //         '<picture><img id="pic' + cat.catID + '" src="' + cat.image + '" alt="picture of kitten"></picture>' +
-      //         '<figcaption>Kitten thanks to <a href="' + cat.sourceURL + '">' + cat.source + '</a></figcaption>';
-      // this.catShow.html( htmlStr );
+
       $(this.catName).text(cat.name);
       $(this.catCount).text(cat.clickCount);
       $(this.catPic).attr( 'src', cat.image );
       $(this.catSource).attr( 'href', cat.sourceURL );
       $(this.catSource).text(cat.source);
 
-      // the problem with the image:
-      // initial cat data loaded including image
-      // next cats data loaded except image
-      // may be caused by pic event handler below - has a new id for catPic
-      // yup that did it!
-
-      // add event handler for selected cat image
-      // this.catPic = $('#pic' + cat.catID + '');
-      // // attach click event to cat pic id
-      // $(this.catPic).click(function(e){
-      //   // increment count
-      //   octopus.incrementClicksForCat(cat.catID);
-      //   e.preventDefault();
-      // });
+      // moved event handler to init
     }
   };
 
@@ -177,6 +169,10 @@
     setRandomCat: function(){
       var numCats = this.getNumCats();
       model.selectedCat = Math.floor(Math.random() * numCats);
+    },
+    // required now for nav menu - sets selected cat in event handler
+    setSelectedCat: function(catRef){
+      model.selectedCat = catRef;
     },
       // get selected cat ID from model
     getSelectedCatID: function(){
@@ -208,10 +204,13 @@
     // getClicksForCat: function(catRef){
     //   return model.cats[catRef].clickCount;
     // },
+
     // increment clickCount for selected cat
-    incrementClicksForCat: function(catRef){
+    // reworked to retrieve current data rather than receive what is given (better event handling)
+    incrementClicksForCat: function(){
+      var catRef = this.getSelectedCatID();
       model.cats[catRef].clickCount++;
-      viewCat.render(catRef);
+      viewCat.render();
     }
   };
 
