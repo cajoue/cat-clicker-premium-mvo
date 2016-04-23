@@ -40,7 +40,6 @@ _Interaction_
 https://discussions.udacity.com/t/cat-clicker-premium-mvo-event-handler-for-clicks/165477
 
 
-
 **Helpful Resources**
 
 http://api.jquery.com

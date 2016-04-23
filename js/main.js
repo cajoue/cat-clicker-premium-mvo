@@ -130,24 +130,24 @@
       // this.catShow.html( htmlStr );
       $(this.catName).text(cat.name);
       $(this.catCount).text(cat.clickCount);
-      //$(this.catPic).html(); = cat.image;
-
-      console.log('cat.image: ' + cat.image);
       $(this.catPic).attr( 'src', cat.image );
-      console.log('$(this.catPic): ' + JSON.stringify($(this.catPic).attr( 'src')));
-
       $(this.catSource).attr( 'href', cat.sourceURL );
       $(this.catSource).text(cat.source);
 
+      // the problem with the image:
+      // initial cat data loaded including image
+      // next cats data loaded except image
+      // may be caused by pic event handler below - has a new id for catPic
+      // yup that did it!
 
       // add event handler for selected cat image
-      this.catPic = $('#pic' + cat.catID + '');
-      // attach click event to cat pic id
-      $(this.catPic).click(function(e){
-        // increment count
-        octopus.incrementClicksForCat(cat.catID);
-        e.preventDefault();
-      });
+      // this.catPic = $('#pic' + cat.catID + '');
+      // // attach click event to cat pic id
+      // $(this.catPic).click(function(e){
+      //   // increment count
+      //   octopus.incrementClicksForCat(cat.catID);
+      //   e.preventDefault();
+      // });
     }
   };
 
